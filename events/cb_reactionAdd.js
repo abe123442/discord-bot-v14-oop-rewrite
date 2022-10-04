@@ -24,12 +24,13 @@ module.exports = {
         if (!message.author.bot && !reaction.me) {
             const emoji = reaction.emoji.toString();
             const messageID = message.id;
+            const serverId = message.guild.id;
             const channelID = message.channelId;
             const authorID = message.author.id;
             const messageContent = message.cleanContent.slice(0, cbStorage.maxMsgLen);
 
             // add to storage
-            await cbStorage.db.add_value(emoji, messageID, authorID, channelID, messageContent);
+            await cbStorage.db.add_value(emoji, serverId, messageID, authorID, channelID, messageContent);
 
             // get it from storage
             const entry = await cbStorage.db.get_by_msg_emoji(messageID, emoji);

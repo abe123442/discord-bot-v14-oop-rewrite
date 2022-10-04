@@ -108,7 +108,7 @@ async function handleCBAOutput(interaction, cbStorage) {
         // update the config
         try {
             // send the messages and update the config
-            const leaderboard = await cbStorage.generateLeaderboard({ onlyFirstPage: true, emoji: cbStorage.config.carrot });
+            const leaderboard = await cbStorage.generateLeaderboard({ onlyFirstPage: true});
             const message = await interaction.channel.send({embeds: [leaderboard[0]]});
 
             cbStorage.config.permaChannelID = channelID;

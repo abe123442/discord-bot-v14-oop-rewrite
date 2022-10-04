@@ -20,12 +20,6 @@ const commandCBUser = new SlashCommandSubcommandBuilder()
     .setDescription("Gets the CB for a certain User.")
     .addUserOption(option => option.setName("username").setDescription("The @ of the user if wanted.").setRequired(false));
 
-// cb emoji [:emoji:]
-const commandCBAll = new SlashCommandSubcommandBuilder()
-    .setName("emoji")
-    .setDescription("Gets an/all emoji board.")
-    .addStringOption(option => option.setName("emoji").setDescription("The specific emoji board if wanted.").setRequired(false));
-
 // cb id <id>
 const commandCBID = new SlashCommandSubcommandBuilder()
     .setName("id")
@@ -77,7 +71,7 @@ async function handleInteraction(interaction) {
  */
 async function handleCBMain(interaction, cbStorage) {
     // generate leaderboard and send it
-    const pages = await cbStorage.generateLeaderboard({emoji: String(cbStorage.config.carrot)});
+    const pages = await cbStorage.generateLeaderboard({});
     
     const scroller = new DiscordScroll(pages);
     await scroller.send(interaction);
@@ -129,7 +123,7 @@ async function handleCBAll(interaction, cbStorage) {
     }
 
     // all good
-    const pages = await cbStorage.generateLeaderboard({emoji: result.emoji});
+    const pages = await cbStorage.generateLeaderboard({});
     const scroller = new DiscordScroll(pages);
     await scroller.send(interaction);
 }
