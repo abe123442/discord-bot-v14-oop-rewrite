@@ -68,6 +68,11 @@ async function handleInteraction(interaction) {
 async function handleCBMain(interaction, cbStorage) {
     // generate leaderboard and send it
     const pages = await cbStorage.generateLeaderboard({});
+
+    if (!pages) {
+        interaction.reply({content: "ERROR: no emoji is set", ephemeral: true});
+        return;
+    }
     
     const scroller = new DiscordScroll(pages);
     await scroller.send(interaction);
