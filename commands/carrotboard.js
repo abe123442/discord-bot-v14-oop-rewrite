@@ -32,7 +32,6 @@ const baseCommand = new SlashCommandBuilder()
     .setDescription("Master carrotboard command")
     .addSubcommand(commandCBMain)
     .addSubcommand(commandCBUser)
-    .addSubcommand(commandCBAll)
     .addSubcommand(commandCBID)
 
 //////////////////////////////////////////////
@@ -53,9 +52,6 @@ async function handleInteraction(interaction) {
             break;
         case "user":
             await handleCBUser(interaction, cbStorage);
-            break;
-        case "emoji":
-            await handleCBAll(interaction, cbStorage);
             break;
         case "id":
             await handleCBID(interaction, cbStorage);
@@ -91,39 +87,6 @@ async function handleCBUser(interaction, cbStorage) {
 
     // get data
     const pages = await cbStorage.generateLeaderboard({userID: String(userID)});
-    const scroller = new DiscordScroll(pages);
-    await scroller.send(interaction);
-}
-
-/** 
- * @param {CommandInteraction} interaction
- * @param {CarrotboardStorage} cbStorage
- */
-async function handleCBAll(interaction, cbStorage) {
-    // check if emoji given
-    const messageStr = interaction.options.getString("emoji", false);
-    if (messageStr == null) {
-        // no emoji given
-        const pages = await cbStorage.generateLeaderboard({});
-        const scroller = new DiscordScroll(pages);
-        await scroller.send(interaction);
-        return;
-    }
-
-    // emoji was given get the emoji
-    const result = extractOneEmoji(messageStr);
-    if (result == null) {
-        // none were given
-        await interaction.reply({ content: "Please give one emoji.", ephemeral: true });
-        return;
-    } else if (result.index != 0) {
-        // not at the front
-        await interaction.reply({ content: "Please give only an emoji.", ephemeral: true });
-        return;
-    }
-
-    // all good
-    const pages = await cbStorage.generateLeaderboard({});
     const scroller = new DiscordScroll(pages);
     await scroller.send(interaction);
 }
