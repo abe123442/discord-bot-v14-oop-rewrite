@@ -8,4 +8,3 @@ module.exports = {
         global.cbStorage = cbStorage;
     },
 };
-
