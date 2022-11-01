@@ -78,8 +78,8 @@ async function handleCBACarrot(interaction, cbStorage) {
     }
 
     // successful
-    cbStorage.config.carrot = result.emoji;
-    cbStorage.config.saveToFile();
+    await cbStorage.setEmoji(result.emoji, interaction.guildId);
+
     await interaction.reply({ content: `Carrot emoji set to ${result.emoji}`, ephemeral: true });
 }
 
