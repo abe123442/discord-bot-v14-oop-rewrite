@@ -21,7 +21,11 @@ module.exports = {
         const message = reaction.message;
         
         // make sure not a bot and not this client
+        console.log(
+            'msg reaction add handler'
+        )
         if (!message.author.bot && !reaction.me) {
+            console.log('msg reaction if statement');
             const emoji = reaction.emoji.toString();
             const messageID = message.id;
             const serverId = message.guild.id;
@@ -33,22 +37,17 @@ module.exports = {
             await cbStorage.db.add_value(emoji, serverId, messageID, authorID, channelID, messageContent);
 
             // get it from storage
-            const entry = await cbStorage.db.get_by_msg_emoji(messageID, emoji);
+            const entry = await cbStorage.db.get_by_msg_id(messageID);
             if (entry == null) {
+                console.log('entry not found');
                 return;
             }
 
-            // check whether its a pin
-            if (emoji == cbStorage.pin) {
-                if (Number(entry["count"]) == Number(cbStorage.config.pinMinimum)) {
-                    await message.pin();
-                    // send pin alert
-                    await cbStorage.sendCBAlert(reaction, entry["carrot_id"], emoji);
-                }
-            } else if (Number(entry["count"]) == Number(cbStorage.config.minimum))  {
+            // TODO: bring back minimum check
+        //    if (Number(entry["count"]) == Number(cbStorage.config.minimum))  {
                 // send normal alert
-                await cbStorage.sendCBAlert(reaction, entry["carrot_id"], emoji);
-            }
+            await cbStorage.sendCBAlert(reaction, entry["carrot_id"], emoji, serverId);
+            // }
 
             await cbStorage.updateLeaderboard();
         }
