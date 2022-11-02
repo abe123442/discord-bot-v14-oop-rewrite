@@ -88,6 +88,11 @@ async function handleCBACarrot(interaction, cbStorage) {
  * @param {CarrotboardStorage} cbStorage
  */
 async function handleCBAOutput(interaction, cbStorage) {
+    if (!cbStorage.db.check_server(interaction.guildId)) {
+        await interaction.reply({ content: `Server does not have an emoji set. Please do this first.`, ephemeral: true });
+        return;
+    }
+
     // get details
     const channelID = interaction.channelId;
     const choice = interaction.options.getString("type");
@@ -96,8 +101,7 @@ async function handleCBAOutput(interaction, cbStorage) {
     if (choice == "alert") {
         // update the config
         try {
-            cbStorage.config.alertChannelID = channelID;
-            cbStorage.config.saveToFile();
+            cbStorage.setAlertChannel(channelID, interaction.guildId);
 
             await interaction.reply({content: "Alert Output Channel Set.", ephemeral: true});
         } catch (e) {
@@ -108,12 +112,10 @@ async function handleCBAOutput(interaction, cbStorage) {
         // update the config
         try {
             // send the messages and update the config
-            const leaderboard = await cbStorage.generateLeaderboard({ onlyFirstPage: true});
+            const leaderboard = await cbStorage.generateLeaderboard({ onlyFirstPage: true, channelID: channelID, server_id: interaction.guildId});
             const message = await interaction.channel.send({embeds: [leaderboard[0]]});
 
-            cbStorage.config.permaChannelID = channelID;
-            cbStorage.config.leaderboardID = message.id;
-            cbStorage.config.saveToFile();
+            cbStorage.setLeaderboard(permaChannelID, message.id, interaction.guildId);
             
             await interaction.reply({content: "Leaderboard Channel Set.", ephemeral: true});
         } catch (e) {
