@@ -115,7 +115,7 @@ async function handleCBAOutput(interaction, cbStorage) {
             const leaderboard = await cbStorage.generateLeaderboard({ onlyFirstPage: true, channelID: channelID, server_id: interaction.guildId});
             const message = await interaction.channel.send({embeds: [leaderboard[0]]});
 
-            cbStorage.setLeaderboard(permaChannelID, message.id, interaction.guildId);
+            cbStorage.setLeaderboard(channelID, message.id, interaction.guildId);
             
             await interaction.reply({content: "Leaderboard Channel Set.", ephemeral: true});
         } catch (e) {

@@ -49,7 +49,7 @@ module.exports = {
             await cbStorage.sendCBAlert(reaction, entry["carrot_id"], emoji, serverId);
             // }
 
-            await cbStorage.updateLeaderboard();
+            await cbStorage.updateLeaderboard(serverId, channelID);
         }
     },
 };
