@@ -68,7 +68,7 @@ async function handleInteraction(interaction) {
 async function handleCBMain(interaction, cbStorage) {
     // generate leaderboard and send it
     const pages = await cbStorage.generateLeaderboard({
-        channelId: interaction.channelId, 
+        channelID: interaction.channelId, 
         server_id: interaction.guildId
     });
 
