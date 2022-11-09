@@ -27,11 +27,12 @@ module.exports = {
             const messageID = message.id;
             const channelID = message.channelId;
             const authorID = message.author.id;
+            const serverId = message.guild.id;
 
             // subtract from storage
             await cbStorage.db.sub_value(emoji, messageID, authorID, channelID);
 
-            await cbStorage.updateLeaderboard();
+            await cbStorage.updateLeaderboard(serverId, channelID);
         }
     },
 };

@@ -17,9 +17,12 @@ module.exports = {
 
         /** @type {CarrotboardStorage} */
         const cbStorage = global.cbStorage;
+
+        const channelID = message.channelId;
+        const serverId = message.guild.id;
         
         // remove it from storage, and update leaderboard
         await cbStorage.db.del_entry(message.id, message.channelId);
-        await cbStorage.updateLeaderboard();
+        await cbStorage.updateLeaderboard(serverId, channelID);
     },
 };
