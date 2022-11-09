@@ -14,9 +14,9 @@ module.exports = {
     // it will crash the bot??? No clue why/how to fix.
     async execute(message) {
         // check if partial
-        if (message.partial) {
-            message = await message.fetch();
-        }
+        // if (message.partial) {
+        //     message = await message.fetch();
+        // }
 
         /** @type {CarrotboardStorage} */
         const cbStorage = global.cbStorage;
