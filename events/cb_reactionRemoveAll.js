@@ -23,6 +23,6 @@ module.exports = {
         
         // remove it from storage, and update leaderboard
         await cbStorage.db.del_entry(message.id, message.channelId);
-        await cbStorage.updateLeaderboard(serverId channelID);
+        await cbStorage.updateLeaderboard(serverId, channelID);
     },
 };
