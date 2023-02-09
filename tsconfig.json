@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
-    "lib": [
-      "ES2016"
-    ],
-    "module": "ESNext",
-    "target": "ES2016",
-    "moduleResolution": "node",
-    "strict": true,
-    "downlevelIteration": true,
-    "skipLibCheck": true,
+    "target": "es2016",
+    "module": "NodeNext",
+    "rootDir": "./src",
+    "resolveJsonModule": true,
+    "outDir": "./build",
+    "downlevelIteration": false,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": false,
-    "types": [
-      "bun-types" // add Bun global
-    ]
-  }
+    "strict": true,
+    "useUnknownInCatchVariables": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
 }

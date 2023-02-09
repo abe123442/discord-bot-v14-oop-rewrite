@@ -1,5 +1,6 @@
 import { Client, ShardClientUtil } from 'discord.js'
-import { Signale } from 'signale'
+import pkg from 'signale';
+const { Signale } = pkg;
 
 const options = {
   disabled: false,
@@ -7,13 +8,6 @@ const options = {
   logLevel: 'info',
   secrets: [],
   stream: process.stdout,
-  types: {
-    start: {
-      badge: '✔️',
-      color: 'green',
-      label: 'start',
-    }
-  }
 }
 
 export default class Logger extends Signale {
