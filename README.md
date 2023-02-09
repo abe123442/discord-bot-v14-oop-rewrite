@@ -3,11 +3,23 @@
 To install dependencies:
 
 ```bash
-bun install
+npm i
 ```
 
-To run:
+To continuously build the latest code while development, run this in a separate terminal:
 
 ```bash
-bun run index.ts
+npm run watch
+```
+
+To register the slash commands:
+
+```bash
+npm run deploy
+```
+
+To run the discord bot:
+
+```bash
+npm run dev
 ```

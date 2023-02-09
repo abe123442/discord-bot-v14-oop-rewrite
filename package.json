@@ -4,7 +4,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "dev": "node --watch build/index.js",
-    "deploy-cmds": "node build/deploy-commands.js"
+    "deploy": "node build/deploy-commands.js"
   },
   "devDependencies": {
     "@types/node": "^18.13.0",
