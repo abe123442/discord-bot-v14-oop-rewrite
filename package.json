@@ -4,6 +4,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "dev": "node --watch build/index.js",
+    "clean": "tsc --build --clean",
     "deploy": "node build/deploy-commands.js"
   },
   "devDependencies": {
