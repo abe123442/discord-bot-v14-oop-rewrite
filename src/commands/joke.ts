@@ -1,4 +1,5 @@
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
+import { CommandInteraction, SlashCommandBuilder, EmbedBuilder } from 'discord.js'
+import config from '../config.js'
 import { SlashCommand } from '../types.js'
 
 const slashCommand: SlashCommand = {
@@ -9,8 +10,12 @@ const slashCommand: SlashCommand = {
 		const apiURL = "https://v2.jokeapi.dev/joke/Any?safe-mode&type=single"
 		let response = await fetch(apiURL)
 		let data = await response.json();
-		
-		await interaction.reply(data['joke'])
+
+		const embed = new EmbedBuilder()
+			.setTitle('A random joke')
+			.setDescription(data['joke']);
+
+		await interaction.reply({ embeds: [embed], ephemeral: true })
 	}
 }
 
