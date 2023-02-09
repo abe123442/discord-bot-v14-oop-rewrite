@@ -1,6 +1,6 @@
 import { Client, ShardClientUtil } from 'discord.js'
-import pkg from 'signale';
-const { Signale } = pkg;
+import pkg from 'signale'
+const { Signale } = pkg
 
 const options = {
   disabled: false,

@@ -13,7 +13,7 @@ export interface IConfig {
   }
   production: string | boolean
   guildId: string
-};
+}
 
 const config: IConfig = {
   token: process.env.DISCORD_TOKEN || '',

@@ -3,10 +3,14 @@ import { SlashCommand } from '../types.js'
 
 const slashCommand: SlashCommand = {
 	command: new SlashCommandBuilder()
-		.setName("marco")
-		.setDescription("Replies with Polo!"),
+		.setName("joke")
+		.setDescription("Replies with a random joke!"),
 	execute: async (interaction: CommandInteraction) => {
-		await interaction.reply("Polo!")
+		const apiURL = "https://v2.jokeapi.dev/joke/Any?safe-mode&type=single"
+		let response = await fetch(apiURL)
+		let data = await response.json();
+		
+		await interaction.reply(data['joke'])
 	}
 }
 
