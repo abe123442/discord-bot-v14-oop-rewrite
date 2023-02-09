@@ -1,4 +1,4 @@
-import { APIApplicationCommand, REST, Routes } from 'discord.js';
+import { APIApplicationCommand, REST, RESTPostAPIChatInputApplicationCommandsJSONBody, Routes } from 'discord.js';
 import config from './config.js';
 import { SlashCommand } from './types.js';
 import { join } from 'node:path';
@@ -9,7 +9,7 @@ import { readdirSync } from 'node:fs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const commandsDir = join(__dirname, 'commands')
 
-const commands: any[] = [];
+const commands: RESTPostAPIChatInputApplicationCommandsJSONBody[] = [];
 // Grab all the command files from the commands directory you created earlier
 const commandFiles = readdirSync(commandsDir).filter(file => file.endsWith('.js'));
 
