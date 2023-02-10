@@ -8,14 +8,14 @@ const slashCommand: SlashCommand = {
 		.setDescription("Replies with a random joke!"),
 	execute: async (interaction: CommandInteraction) => {
 		const apiURL = "https://v2.jokeapi.dev/joke/Any?safe-mode&type=single"
-		let response = await fetch(apiURL)
-		let data = await response.json();
+		const response = await fetch(apiURL)
+		const data = await response.json();
 
 		const embed = new EmbedBuilder()
 			.setTitle('A random joke')
 			.setDescription(data['joke']);
 
-		await interaction.reply({ embeds: [embed], ephemeral: true })
+		await interaction.reply({ embeds: [embed], ephemeral: false })
 	}
 }
 

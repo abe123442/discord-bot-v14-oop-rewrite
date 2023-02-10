@@ -11,7 +11,6 @@ export interface IConfig {
     info: string
     warn: string
   }
-  production: string | boolean
   guildId: string
 }
 
@@ -28,7 +27,6 @@ const config: IConfig = {
     info: process.env.INFO_COLOR || '#00FFFF',
     warn: process.env.WARN_COLOR || '#FFFF00',
   },
-  production: process.env.PRODUCTION || false,
   guildId: process.env.GUILD_ID || '1069138490278821938'
 }
 
