@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction } from 'discord.js'
-import { SlashCommand } from '../types.js'
+import { BaseSlashCommand } from '../types.js'
 
-const slashCommand: SlashCommand = {
+const slashCommand: BaseSlashCommand = {
   command: new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Shows the bot\'s ping')
@@ -11,7 +11,8 @@ const slashCommand: SlashCommand = {
       embeds: [
         new EmbedBuilder()
           .setDescription(`🏓 Pong! \n 📡 Ping: ${interaction.client.ws.ping}`)
-      ]
+      ],
+      ephemeral: true
     })
   ),
   cooldown: 10

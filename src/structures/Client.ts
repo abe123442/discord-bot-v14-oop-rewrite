@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 import Logger from './Logger.js'
 
 import config, { IConfig } from '../config.js'
-import { SlashCommand } from '../types.js'
+import { BaseSlashCommand } from '../types.js'
 import { join } from 'path'
 
 const clientOptions: ClientOptions = {
@@ -26,17 +26,12 @@ const clientOptions: ClientOptions = {
 }
 
 export class BotClient extends Client {
-  logger: Logger
   config: IConfig
-  commands: Collection<string, SlashCommand>
+  commands: Collection<string, BaseSlashCommand>
 
   constructor() {
     super(clientOptions)
     this.config = config
-    this.logger = new Logger({
-      displayTimestamp: true,
-      displayDate: true,
-    })
     this.commands = new Collection()
   }
 
@@ -50,18 +45,19 @@ export class BotClient extends Client {
       for (const file of commandFiles) {
         const filePath = join(commandsDir, file)
         let ImportedCommand = await import(filePath)
-        ImportedCommand = ImportedCommand.default as SlashCommand
+        ImportedCommand = ImportedCommand.default as BaseSlashCommand
         this.commands.set(ImportedCommand.command.name, ImportedCommand)
         commandCounter += 1
       }
     } catch (error) {
-      this.logger.error(error)
+      console.log(error)
     }
 
-    this.logger.success(`Successfully loaded ${commandCounter} commands!`)
+    console.log(`Successfully loaded ${commandCounter} commands!`)
   }
 
-  loadEvents() {
+  logEvents() {
+    super.once(Events.ClientReady, c => console.log(`Ready! Logged in as ${c.user.tag}`))
     super.on(Events.InteractionCreate, async interaction => {
       if (!interaction.isChatInputCommand()) return
 
@@ -75,13 +71,16 @@ export class BotClient extends Client {
         console.error(error)
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
       }
+
+      console.log(`Successfully executed command '${command.command.name}'!`)
     })
+    super.on(Events.Debug, async e => console.log(e))
+    super.on(Events.Error, async e => console.log(e))
   }
 
   async start() {
-    super.once(Events.ClientReady, c => this.logger.success(`Ready! Logged in as ${c.user.tag}`))
     this.loadCommands()
-    this.loadEvents()
+    this.logEvents()
     super.login(this.config.token)
   }
 }

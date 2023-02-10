@@ -1,6 +1,6 @@
 import { APIApplicationCommand, REST, RESTPostAPIChatInputApplicationCommandsJSONBody, Routes } from 'discord.js'
 import config from './config.js'
-import { SlashCommand } from './types.js'
+import { BaseSlashCommand } from './types.js'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { readdirSync } from 'node:fs'
@@ -14,7 +14,7 @@ const getCommands = async (commandsDir: string) => {
 
 	for (const file of commandFiles) {
 		const filePath = join(commandsDir, file)
-		const ImportedCommand = (await import(filePath)).default as SlashCommand
+		const ImportedCommand = (await import(filePath)).default as BaseSlashCommand
 		// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 		commands.push(ImportedCommand.command.toJSON())
 	}
@@ -29,7 +29,7 @@ const deployCommands = async (commands: RESTPostAPIChatInputApplicationCommandsJ
 
 		// The put method is used to fully refresh all commands in the guild with the current set
 		const data = await rest.put(
-			Routes.applicationCommands(config.clientId), { body: commands }
+			Routes.applicationGuildCommands(config.clientId, config.guildId), { body: commands }
 		) as APIApplicationCommand[]
 
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`)
