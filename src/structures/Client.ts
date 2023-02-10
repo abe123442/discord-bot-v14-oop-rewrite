@@ -4,9 +4,6 @@ import path from 'node:path'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-
-import Logger from './Logger.js'
-
 import config, { IConfig } from '../config.js'
 import { BaseSlashCommand } from '../types.js'
 import { join } from 'path'
